@@ -4,12 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	const submitButton = document.getElementById("submit");
 	const runButton = document.getElementById('run');
 	const insertForm = document.getElementById("insert_form");
-	const runButtonLabel = runButton.innerText;
 
 	if (!htmx || !code_list || !name_list || !submitButton || !runButton) {
 		console.error("必須要素が見つかりません。");
 		return;
 	}
+	const runButtonLabel = runButton.innerText;
 
 	let index = 0;
 	const stats = {
