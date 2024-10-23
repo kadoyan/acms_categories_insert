@@ -1,0 +1,104 @@
+<header>
+	<div>
+		@include("/admin/topicpath.html")
+	</div>
+	<div>
+		<h1 class="acms-admin-admin-title"><!--T-->カテゴリー一括登録<!--/T--></h1>
+	</div>
+</header>
+<div id="list">
+	@include("/htmx/category_list.html")
+</div>
+
+<script src="https://unpkg.com/htmx.org@2.0.3"></script>
+<script src="https://unpkg.com/htmx.org/dist/ext/ajax-header.js"></script>
+
+<div class="acms-admin-margin-top-medium">
+	<h2 class="acms-admin-admin-title3">登録カテゴリー名</h2>
+	<div style="display:flex; gap:2em;" class="acms-admin-form">
+		<div>
+			<label for="category_name" class="acms-admin-form-block">カテゴリー名</label>
+			<textarea name="" rows="10" id="category_name" class="acms-admin-margin-top-mini"></textarea>
+		</div>
+		<div>
+			<label for="category_code" class="acms-admin-form-block">カテゴリーコード</label>
+			<textarea name="" rows="10" id="category_code" class="acms-admin-margin-top-mini"></textarea>
+		</div>
+	</div>
+	<p>カテゴリー名と、それに対応するカテゴリーコードを一行ずつ入力してください。</p>
+
+	<form class="acms-admin-form" hx-post="/htmx/category_list.html" hx-target="#list" hx-ext="ajax-header" hx-swap="innerHTML" hx-trigger="submit" style="margin-top: 20px;" id="insert_form">
+		<h2 class="acms-admin-admin-title3">共通設定</h2>
+		<table class="adminTable acms-admin-table-admin-edit">
+			<tr>
+				<th>ステータス</th>
+				<td>
+					<select name="status" class="js-select2">
+						<option value="open" selected="selected">公開</option>
+						<option value="close">非公開</option>
+						<option value="secret">シークレット</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<th>親カテゴリー</th>
+				<td>
+					<!-- BEGIN_MODULE Category_List -->
+					<select name="parent">
+						<option value=""></option><!-- BEGIN category:loop --><!-- BEGIN li#front -->
+						<option value="{cid}"><!-- END li#front --><!-- BEGIN category:veil -->
+							{name}（{ccd}）<!-- END category:veil --><!-- BEGIN li#rear -->
+						</option><!-- END li#rear --><!-- END category:loop -->
+					</select>
+					<!-- END_MODULE Category_List -->
+				</td>
+			</tr>
+			<tr>
+				<th>インデキシング</th>
+				<td>
+					<div class="acms-admin-form-checkbox">
+						<input type="checkbox" name="indexing" value="on" checked="checked" id="input-checkbox-indexing">
+						<label for="input-checkbox-indexing" class="acms-admin-form-checkbox">
+							<i class="acms-admin-ico-checkbox"></i>
+							リストに出す
+						</label>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>スコープ</th>
+				<td>
+					<div class="acms-admin-form-group">
+						<input type="hidden" name="scope" value="local">
+						<div class="acms-admin-form-checkbox">
+							<input type="checkbox" name="scope" id="input-checkbox-global" value="global">
+							<label for="input-checkbox-global">
+								<i class="acms-admin-ico-checkbox"></i>
+								下の階層のブログが利用することを許可する
+							</label>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</table>
+
+
+
+		<input id="input_name" type="hidden" name="name" class="acms-admin-form-width-mini">
+		<input id="input_code" type="hidden" name="code" class="acms-admin-form-width-mini">
+
+		<input type="hidden" name="tpl" value="/htmx/category_list.html">
+		<input type="hidden" name="category[]" value="name">
+		<input type="hidden" name="category[]" value="code">
+		<input type="hidden" name="category[]" value="parent">
+		<input type="hidden" name="category[]" value="scope">
+		<input type="hidden" name="category[]" value="status">
+		<input type="hidden" name="category[]" value="indexing">
+
+		<button type="submit" name="ACMS_POST_Category_Insert" class="acms-admin-hide" id="submit">追加</button>
+	</form>
+
+	<button type="button" class="acms-admin-btn acms-admin-btn-large acms-admin-margin-top-large" id="run">カテゴリーを追加</button>
+</div>
+
+<script src="/admin/category/category_insert.js"></script>
