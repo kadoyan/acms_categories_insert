@@ -6,8 +6,17 @@
 		<h1 class="acms-admin-admin-title"><!--T-->カテゴリー一括登録<!--/T--></h1>
 	</div>
 </header>
-<div id="list">
-	@include("/admin/htmx/category_list.html")
+<div class="acms-admin-margin-top-medium">
+	<h2 class="acms-admin-admin-title3">現在のカテゴリー一覧</h2>
+	<div id="category_list">
+		@include("/htmx/category_list.html")
+	</div>
+
+	<form hx-post="" hx-ext="ajax-header" hx-trigger="submit" hx-target="#category_list" hx-swap="innerHTML">
+		<input type="hidden" name="bid" value="%{BID}">
+		<input type="hidden" name="tpl" value="/htmx/category_list.html">
+		<button type="submit" name="ACMS_POST_2GET" id="current_list">カテゴリーリストを手動更新</button>
+	</form>
 </div>
 
 <script src="https://unpkg.com/htmx.org@2.0.3"></script>
@@ -27,7 +36,7 @@
 	</div>
 	<p>カテゴリー名と、それに対応するカテゴリーコードを一行ずつ入力してください。</p>
 
-	<form class="acms-admin-form" hx-post="/admin/htmx/category_list.html" hx-target="#list" hx-ext="ajax-header" hx-swap="innerHTML" hx-trigger="submit" style="margin-top: 20px;" id="insert_form">
+	<form action="" class="acms-admin-form" hx-post="" hx-ext="ajax-header" hx-swap="none" hx-trigger="submit" style="margin-top: 20px;" id="insert_form">
 		<h2 class="acms-admin-admin-title3">共通設定</h2>
 		<table class="adminTable acms-admin-table-admin-edit">
 			<tr>
@@ -65,36 +74,17 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<th>スコープ</th>
-				<td>
-					<div class="acms-admin-form-group">
-						<input type="hidden" name="scope" value="local">
-						<div class="acms-admin-form-checkbox">
-							<input type="checkbox" name="scope" id="input-checkbox-global" value="global">
-							<label for="input-checkbox-global">
-								<i class="acms-admin-ico-checkbox"></i>
-								下の階層のブログが利用することを許可する
-							</label>
-						</div>
-					</div>
-				</td>
-			</tr>
 		</table>
-
-
-
+		<input type="hidden" name="scope" value="local">
 		<input id="input_name" type="hidden" name="name" class="acms-admin-form-width-mini">
 		<input id="input_code" type="hidden" name="code" class="acms-admin-form-width-mini">
 
-		<input type="hidden" name="tpl" value="/admin/htmx/category_list.html">
 		<input type="hidden" name="category[]" value="name">
 		<input type="hidden" name="category[]" value="code">
 		<input type="hidden" name="category[]" value="parent">
 		<input type="hidden" name="category[]" value="scope">
 		<input type="hidden" name="category[]" value="status">
 		<input type="hidden" name="category[]" value="indexing">
-
 		<button type="submit" name="ACMS_POST_Category_Insert" class="acms-admin-hide" id="submit">追加</button>
 	</form>
 
