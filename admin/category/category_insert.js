@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
 	const name_list = document.getElementById("category_name");
 	const submitButton = document.getElementById("submit");
 	const runButton = document.getElementById('run');
+	const insertForm = document.getElementById("insert_form");
+	const runButtonLabel = runButton.innerText;
 
 	if (!htmx || !code_list || !name_list || !submitButton || !runButton) {
 		console.error("必須要素が見つかりません。");
@@ -21,14 +23,29 @@ document.addEventListener("DOMContentLoaded", function () {
 		htmx.trigger(submitButton, 'click');
 	}
 
-	document.body.addEventListener('htmx:afterRequest', function (evt) {
+	insertForm.addEventListener('htmx:beforeRequest', function (evt) {
+		console.log("追加中");
+	});
+
+	insertForm.addEventListener('htmx:afterRequest', function (evt) {
 		if (index < stats.codes.length - 1) {
 			index += 1;
 			triggerFormSubmit();
+		} else {
+			console.log("追加完了");
+			const currentList = document.getElementById("current_list");
+			if (currentList) {
+				htmx.trigger(currentList, 'click');
+			}
+			runButton.disabled = false;
+			runButton.innerText = runButtonLabel;
 		}
 	});
 
 	runButton.addEventListener('click', function () {
+		runButton.disabled = true;
+		runButton.innerText = "カテゴリー追加中。おまちください。";
+		index = 0;  // 送信開始時にインデックスをリセット
 		const codes = code_list.value.trim();
 		const names = name_list.value.trim();
 
