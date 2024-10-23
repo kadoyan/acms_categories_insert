@@ -7,7 +7,7 @@
 	</div>
 </header>
 <div id="list">
-	@include("/htmx/category_list.html")
+	@include("/admin/htmx/category_list.html")
 </div>
 
 <script src="https://unpkg.com/htmx.org@2.0.3"></script>
@@ -27,7 +27,7 @@
 	</div>
 	<p>カテゴリー名と、それに対応するカテゴリーコードを一行ずつ入力してください。</p>
 
-	<form class="acms-admin-form" hx-post="/htmx/category_list.html" hx-target="#list" hx-ext="ajax-header" hx-swap="innerHTML" hx-trigger="submit" style="margin-top: 20px;" id="insert_form">
+	<form class="acms-admin-form" hx-post="/admin/htmx/category_list.html" hx-target="#list" hx-ext="ajax-header" hx-swap="innerHTML" hx-trigger="submit" style="margin-top: 20px;" id="insert_form">
 		<h2 class="acms-admin-admin-title3">共通設定</h2>
 		<table class="adminTable acms-admin-table-admin-edit">
 			<tr>
@@ -87,7 +87,7 @@
 		<input id="input_name" type="hidden" name="name" class="acms-admin-form-width-mini">
 		<input id="input_code" type="hidden" name="code" class="acms-admin-form-width-mini">
 
-		<input type="hidden" name="tpl" value="/htmx/category_list.html">
+		<input type="hidden" name="tpl" value="/admin/htmx/category_list.html">
 		<input type="hidden" name="category[]" value="name">
 		<input type="hidden" name="category[]" value="code">
 		<input type="hidden" name="category[]" value="parent">
