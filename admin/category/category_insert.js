@@ -17,9 +17,10 @@ document.addEventListener("DOMContentLoaded", function () {
 		names: []
 	};
 
-	function triggerFormSubmit() {
-		document.getElementById("input_code").value = stats.codes[index];
-		document.getElementById("input_name").value = stats.names[index];
+	function triggerFormSubmit(idx) {
+		console.log(`triggerFormSubmit:${idx}`);
+		document.getElementById("input_code").value = stats.codes[idx];
+		document.getElementById("input_name").value = stats.names[idx];
 		htmx.trigger(submitButton, 'click');
 	}
 
@@ -43,9 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	runButton.addEventListener('click', function () {
-		runButton.disabled = true;
-		runButton.innerText = "カテゴリー追加中。おまちください。";
-		index = 0;  // 送信開始時にインデックスをリセット
 		const codes = code_list.value.trim();
 		const names = name_list.value.trim();
 
@@ -65,7 +63,10 @@ document.addEventListener("DOMContentLoaded", function () {
 			return;
 		}
 
+		runButton.disabled = true;
+		runButton.innerText = "カテゴリー追加中。おまちください。";
+		index = 0;  // 送信開始時にインデックスをリセット
 		// 最初の送信をトリガー
-		triggerFormSubmit();
+		triggerFormSubmit(index);
 	});
 });
