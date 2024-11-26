@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		console.log(`triggerFormSubmit:${idx}`);
 		document.getElementById("input_code").value = stats.codes[idx];
 		document.getElementById("input_name").value = stats.names[idx];
-		htmx.trigger(submitButton, 'click');
+		submitButton.click();
 	}
 
 	insertForm.addEventListener('htmx:beforeRequest', function (evt) {
@@ -31,12 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	insertForm.addEventListener('htmx:afterRequest', function (evt) {
 		if (index < stats.codes.length - 1) {
 			index += 1;
-			triggerFormSubmit();
+			triggerFormSubmit(index);
 		} else {
 			console.log("追加完了");
 			const currentList = document.getElementById("current_list");
 			if (currentList) {
-				htmx.trigger(currentList, 'click');
+				currentList.click();
 			}
 			runButton.disabled = false;
 			runButton.innerText = runButtonLabel;
