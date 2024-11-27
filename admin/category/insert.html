@@ -9,12 +9,12 @@
 <div class="acms-admin-margin-top-medium">
 	<h2 class="acms-admin-admin-title3">現在のカテゴリー一覧</h2>
 	<div id="category_list">
-		@include("/htmx/category_list.html")
+		@include("/include/htmx/category_list.html")
 	</div>
 
 	<form hx-post="" hx-ext="ajax-header" hx-trigger="submit" hx-target="#category_list" hx-swap="innerHTML">
 		<input type="hidden" name="bid" value="%{BID}">
-		<input type="hidden" name="tpl" value="/htmx/category_list.html">
+		<input type="hidden" name="tpl" value="/include/htmx/category_list.html">
 		<button type="submit" name="ACMS_POST_2GET" id="current_list">カテゴリーリストを手動更新</button>
 	</form>
 </div>
